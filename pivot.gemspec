@@ -1,15 +1,16 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
+require 'base64'
 require "pivot/version"
 
 Gem::Specification.new do |s|
   s.name        = "pivot"
   s.version     = Pivot::VERSION
   s.authors     = ["Ed James"]
-  s.email       = ["ed.james.email@gmail.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.email       = Base64.decode64("ZWQuamFtZXMuZW1haWxAZ21haWwuY29t\n")
+  s.homepage    = "https://github.com/edjames/pivot"
+  s.summary     = %q{A handy tool for transforming an ActiveRecord-esque data set into a spreadsheet-esque pivot table}
+  s.description = %q{A handy tool for transforming an ActiveRecord-esque data set into a spreadsheet-esque pivot table}
 
   s.rubyforge_project = "pivot"
 

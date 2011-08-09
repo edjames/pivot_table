@@ -5,6 +5,7 @@ gemspec
 
 group :development, :test do
   gem 'autotest'
+  gem 'autotest-growl'
   gem 'autotest-notification'
   gem 'bundler'
   gem 'launchy'

@@ -1,6 +1,7 @@
 require "pivot/version"
 require "pivot/core"
+require 'ostruct'
 
 module Pivot
-  # Your code goes here...
+
 end
