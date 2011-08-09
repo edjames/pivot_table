@@ -1,0 +1,13 @@
+= Pivot
+
+A handy tool for transforming a dataset into a spreadsheet-style pivot table.
+
+== Why make this?
+
+blah...
+
+== Installation
+
+Do something
+
+  command here
