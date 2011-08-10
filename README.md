@@ -14,7 +14,7 @@ Installation
 
 Couldn't be easier...
 
-> gem install pivot
+    gem install pivot
 
 There are no dependencies and pivot will work on any version of Ruby.
 
@@ -30,26 +30,44 @@ At the very least, you will need to provide four things to create a pivot table.
 
 Let's say you have a dataset that looks like this (I'll use OpenStruct, but this could easily be ActiveRecord, or even a custom object):
 
-> my_data = []
-> my_data << OpenStruct.new(:city => 'London',   :qtr => 1, :sales => 100)
-> my_data << OpenStruct.new(:city => 'London',   :qtr => 2, :sales => 200)
-> my_data << OpenStruct.new(:city => 'London',   :qtr => 3, :sales => 300)
-> my_data << OpenStruct.new(:city => 'London',   :qtr => 4, :sales => 400)
-> my_data << OpenStruct.new(:city => 'New York', :qtr => 1, :sales => 10)
-> my_data << OpenStruct.new(:city => 'New York', :qtr => 2, :sales => 20)
-> my_data << OpenStruct.new(:city => 'New York', :qtr => 3, :sales => 30)
-> my_data << OpenStruct.new(:city => 'New York', :qtr => 4, :sales => 40)
+    my_data = []
+    my_data << OpenStruct.new(:city => 'London',   :quarter => 'Q1', :sales => 100)
+    my_data << OpenStruct.new(:city => 'London',   :quarter => 'Q2', :sales => 200)
+    my_data << OpenStruct.new(:city => 'London',   :quarter => 'Q3', :sales => 300)
+    my_data << OpenStruct.new(:city => 'London',   :quarter => 'Q4', :sales => 400)
+    my_data << OpenStruct.new(:city => 'New York', :quarter => 'Q1', :sales => 10)
+    my_data << OpenStruct.new(:city => 'New York', :quarter => 'Q2', :sales => 20)
+    my_data << OpenStruct.new(:city => 'New York', :quarter => 'Q3', :sales => 30)
+    my_data << OpenStruct.new(:city => 'New York', :quarter => 'Q4', :sales => 40)
 
 You can then generate a pivot table like so...
 
-> Pivot::Table.generate do
->   data   my_dataset
->   column :quarter
->   row    :date
->   value  :sum
-> end
+    Pivot::Table.generate do
+      data     my_data
+      column   :quarter
+      row      :date
+      pivot_on :sales
+    end
 
-This will give you an array
+This will give you a hash of arrays that looks like this...
+
+    {
+      :headers => ['', 'Q1', 'Q2', 'Q3', 'Q4', 'Total'],
+      :rows => [
+        ['London',  100, 200, 300, 400, 1000],
+        ['New York', 10,  20,  30,  40, 100]
+      ],
+      :totals => ['Total', 110, 220, 330, 440, 1100]
+    }
+
+...which makes it easy-peasy to print our a table that looks like this...
+
+               Q1    Q2    Q3    Q4   Total
+    London    100   200   300   400    1000
+    New York   10    20    30    40     100
+    Total     110   220   330   440    1100
+
+Ah, that's better.
 
 Contributing to Pivot
 ---------------------
