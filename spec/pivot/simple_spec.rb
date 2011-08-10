@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Pivot
-  describe Core do
+  describe Simple do
 
     it "should do something" do
       @data = []
@@ -22,7 +22,7 @@ module Pivot
       @data << OpenStruct.new(:city => 'New York', :qtr => 3, :sales => 30)
       @data << OpenStruct.new(:city => 'New York', :qtr => 4, :sales => 40)
 
-      instance = Core.new
+      instance = Simple.new
 
       result = instance.generate @data
 

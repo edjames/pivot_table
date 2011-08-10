@@ -42,7 +42,7 @@ Let's say you have a dataset that looks like this (I'll use OpenStruct, but this
 
 You can then generate a pivot table like so...
 
-    Pivot::Table.generate do
+    Pivot::Simple.generate do
       data     my_data
       column   :quarter
       row      :date
@@ -60,7 +60,7 @@ This will give you a hash of arrays that looks like this...
       :totals => ['Total', 110, 220, 330, 440, 1100]
     }
 
-...which makes it easy-peasy to print our a table that looks like this...
+...which makes it easy-peasy to print a pivot table that looks like this...
 
                Q1    Q2    Q3    Q4   Total
     London    100   200   300   400    1000

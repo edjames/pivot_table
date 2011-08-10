@@ -1,5 +1,5 @@
 module Pivot
-  class Core
+  class Simple
 
     def initialize
 
