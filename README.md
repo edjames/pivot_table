@@ -42,11 +42,11 @@ Let's say you have a dataset that looks like this (I'll use OpenStruct, but this
 
 You can then generate a pivot table like so...
 
-    p = Pivot::Simple.new do |pivot|
-      pivot.data     = my_data
-      pivot.column   = :quarter
-      pivot.row      = :date
-      pivot.pivot_on = :sales
+    p = Pivot::Simple.new do |p|
+      p.data     = my_data
+      p.column   = :quarter
+      p.row      = :row
+      p.pivot_on = :sales
     end
     p.generate
 
