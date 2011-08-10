@@ -23,14 +23,33 @@ Usage
 
 At the very least, you will need to provide four things to create a pivot table...
 
-* a dataset (this doens't necessarily have to be an ActiveRecord dataset, but it should at least behave like ActiveRecord e.g. OpenStruct)
+* a dataset (this doesn't necessarily have to be an ActiveRecord dataset, but it should at least behave like ActiveRecord e.g. OpenStruct)
 * the method to be used as column names
 * the method to be used as row names
 * the method to be used as the pivot
 
+Let's say you have a dataset that looks like this (I'll use OpenStruct, but this could easily be ActiveRecord, or even a custom object):
+
+> my_data = []
+> my_data << OpenStruct.new(:city => 'London',   :qtr => 1, :sales => 100)
+> my_data << OpenStruct.new(:city => 'London',   :qtr => 2, :sales => 200)
+> my_data << OpenStruct.new(:city => 'London',   :qtr => 3, :sales => 300)
+> my_data << OpenStruct.new(:city => 'London',   :qtr => 4, :sales => 400)
+> my_data << OpenStruct.new(:city => 'New York', :qtr => 1, :sales => 10)
+> my_data << OpenStruct.new(:city => 'New York', :qtr => 2, :sales => 20)
+> my_data << OpenStruct.new(:city => 'New York', :qtr => 3, :sales => 30)
+> my_data << OpenStruct.new(:city => 'New York', :qtr => 4, :sales => 40)
+
 You can then generate a pivot table like so...
 
+> Pivot::Table.generate do
+>   data   my_dataset
+>   column :quarter
+>   row    :date
+>   value  :sum
+> end
 
+This will give you an array
 
 Contributing to Pivot
 ---------------------
