@@ -42,14 +42,15 @@ Let's say you have a dataset that looks like this (I'll use OpenStruct, but this
 
 You can then generate a pivot table like so...
 
-    Pivot::Simple.generate do
-      data     my_data
-      column   :quarter
-      row      :date
-      pivot_on :sales
+    p = Pivot::Simple.new do |pivot|
+      pivot.data     = my_data
+      pivot.column   = :quarter
+      pivot.row      = :date
+      pivot.pivot_on = :sales
     end
+    p.generate
 
-This will give you a hash of arrays that looks like this...
+...which will give you a hash that looks like this...
 
     {
       :headers => ['', 'Q1', 'Q2', 'Q3', 'Q4', 'Total'],
