@@ -45,7 +45,7 @@ You can then generate a pivot table like so...
     p = Pivot::Simple.new do |p|
       p.data     = my_data
       p.column   = :quarter
-      p.row      = :row
+      p.row      = :city
       p.pivot_on = :sales
     end
     p.generate
