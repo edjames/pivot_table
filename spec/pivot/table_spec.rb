@@ -62,17 +62,17 @@ module Pivot
     end
 
     context 'row totals' do
-      subject { @instance.add_row_totals_to [[1, 2, 3], [10, 20, 30]] }
+      subject { @instance.insert_row_totals [[1, 2, 3], [10, 20, 30]] }
       it { should == [[1, 2, 3, 6], [10, 20, 30, 60]] }
     end
 
     context 'sum for row' do
-      subject { @instance.sum_for [1, 2, 3, 4, 5] }
+      subject { @instance.row_sum [1, 2, 3, 4, 5] }
       it { should == 15 }
     end
 
     context 'column totals' do
-      subject { @instance.column_totals_for [[1, 2, 3], [4, 5, 6]] }
+      subject { @instance.column_totals [[1, 2, 3], [4, 5, 6]] }
       it { should == [5, 7, 9] }
     end
 

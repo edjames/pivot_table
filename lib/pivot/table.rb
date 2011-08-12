@@ -24,25 +24,24 @@ module Pivot
       end
     end
 
-    def sum_for row
+    def row_sum row
       row.reject { |value| value.kind_of? String }.inject(0) { |sum, value| sum += value }
     end
 
-    def add_row_totals_to data
-      data.map { |row| row << sum_for(row) }
+    def insert_row_totals data
+      data.map { |row| row << row_sum(row) }
     end
 
-    def column_totals_for data
+    def column_totals data
       numeric_data = data.dup
       numeric_data.map! { |row| row.reject { |value| value.kind_of? String } }
-      numeric_data.transpose.map { |row| sum_for row }
+      numeric_data.transpose.map { |row| row_sum row }
     end
 
     def generate
       headers = column_headers.unshift('') << 'Total'
-      rows    = add_row_totals_to pivoted_row_data
-      totals  = column_totals_for rows
-      totals.unshift 'Total'
+      rows    = insert_row_totals pivoted_row_data
+      totals  = column_totals(rows).unshift 'Total'
 
       {
           :headers => headers,

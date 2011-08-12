@@ -70,6 +70,12 @@ You can then generate a pivot table like so...
 
 Ah, that's better.
 
+Still to come
+-------------
+
+Pivot is still in the very early stages of development. As my personal needs for evolve, I'll update the gem with new functionality accordingly.
+Feel free to fork and/or suggest new features.
+
 Contributing to Pivot
 ---------------------
 
