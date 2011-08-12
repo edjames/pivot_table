@@ -42,7 +42,7 @@ Let's say you have a dataset that looks like this (I'll use OpenStruct, but this
 
 You can then generate a pivot table like so...
 
-    p = Pivot::Simple.new do |p|
+    p = Pivot::Table.new do |p|
       p.data     = my_data
       p.column   = :quarter
       p.row      = :city
