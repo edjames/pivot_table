@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 module Pivot
-  describe Simple do
+  describe Table do
     context 'accessors' do
-      subject { Simple.new }
+      subject { Table.new }
       it { should respond_to :data }
       it { should respond_to :column }
       it { should respond_to :row }
@@ -12,7 +12,7 @@ module Pivot
 
     context 'instantiate using explicit block form' do
       subject do
-        Simple.new do |i|
+        Table.new do |i|
           i.data     = :data
           i.column   = :column
           i.row      = :row
@@ -36,7 +36,7 @@ module Pivot
       @data << OpenStruct.new(:city => 'New York', :quarter => 'Q2', :sales => 20)
       @data << OpenStruct.new(:city => 'New York', :quarter => 'Q3', :sales => 30)
       @data << OpenStruct.new(:city => 'New York', :quarter => 'Q4', :sales => 40)
-      @instance = Simple.new do |i|
+      @instance = Table.new do |i|
         i.data     = @data
         i.column   = :quarter
         i.row      = :city

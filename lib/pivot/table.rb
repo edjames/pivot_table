@@ -1,5 +1,5 @@
 module Pivot
-  class Simple
+  class Table
 
     attr_accessor :data, :column, :row, :pivot_on
 
