@@ -1,0 +1,21 @@
+ruby_version="1.9.2"
+gemset_name="pivot"
+
+ok="\033[10;32m"
+warn="\033[1;31m"
+reset="\033[0m"
+
+if rvm list strings | grep -q "${ruby_version}" ; then
+  rvm use ${ruby_version}
+
+  if rvm gemset list | grep -q "${gemset_name}" ; then
+    echo -e "${ok}Using the ${gemset_name} gemset${reset}"
+    rvm gemset use ${gemset_name}
+  else
+    echo -e "${ok}The ${gemset_name} gemset does not exist, using global gemset${reset}"
+  fi
+
+else
+  echo -e "${warn}You do not have the required Ruby installed: ${ruby_version}${reset}"
+
+fi
