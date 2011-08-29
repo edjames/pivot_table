@@ -43,8 +43,21 @@ module Pivot
         i.pivot_on = :sales
       end
     end
-
+    
     subject { @instance }
+    
+    context 'check for numeric values' do
+      specify { @instance.is_numeric?(-1).should be_true }
+      specify { @instance.is_numeric?(0).should be_true }
+      specify { @instance.is_numeric?(1).should be_true }
+      specify { @instance.is_numeric?(1.1).should be_true }
+      specify { @instance.is_numeric?('1.1').should be_true }
+    end
+    
+    context 'check for non numeric values' do
+      specify { @instance.is_numeric?('abc').should be_false }
+      specify { @instance.is_numeric?(::Time.now).should be_false }
+    end
 
     context 'column headers' do
       subject { @instance.column_headers }

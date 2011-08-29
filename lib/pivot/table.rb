@@ -23,9 +23,13 @@ module Pivot
         result << row.flatten.unshift(rh)
       end
     end
+    
+    def is_numeric?(obj) 
+      ! obj.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/).nil?
+    end
 
     def row_sum row
-      row.reject { |value| value.kind_of? String }.inject(0) { |sum, value| sum += value }
+      row.select { |value| is_numeric? value }.inject(0) { |sum, value| sum += value }
     end
 
     def insert_row_totals data
@@ -34,7 +38,7 @@ module Pivot
 
     def column_totals data
       numeric_data = data.dup
-      numeric_data.map! { |row| row.reject { |value| value.kind_of? String } }
+      numeric_data.map! { |row| row.select { |value| is_numeric? value } }
       numeric_data.transpose.map { |row| row_sum row }
     end
 
