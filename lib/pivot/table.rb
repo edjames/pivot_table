@@ -15,42 +15,58 @@ module Pivot
       @data.collect { |r| r.send @row }.uniq.sort
     end
 
-    def pivoted_row_data
-      row_headers.inject([]) do |result, rh|
-        row = column_headers.inject([]) do |arr, ch|
-          arr << @data.collect { |d| d.send @pivot_on if d.send(@row) == rh && d.send(@column) == ch }.compact
-        end
-        result << row.flatten.unshift(rh)
+    def initialize_grid(rows, columns, default_value = 0)
+      @grid = []
+      rows.times do
+        @grid << columns.times.inject([]) { |col| col << default_value }
       end
+      @grid
     end
-    
-    def is_numeric?(obj) 
-      ! obj.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/).nil?
+
+    def matching_data(row_header, column_header)
+      data.select { |item| item.send(@row) == row_header && item.send(@column) == column_header }
+    end
+
+    def populate_grid
+      row_headers.each_with_index do |row_header, row_index|
+        column_headers.each_with_index do |column_header, column_index|
+          collected                      = matching_data row_header, column_header
+          total                          = collected.inject(0) { |sum, item| sum += item.send(@pivot_on) }
+          @grid[row_index][column_index] += total
+        end
+      end
+      @grid
     end
 
     def row_sum row
-      row.select { |value| is_numeric? value }.inject(0) { |sum, value| sum += value }
+      row.inject(0) { |sum, value| sum += value }
     end
 
-    def insert_row_totals data
-      data.map { |row| row << row_sum(row) }
+    def calculate_row_totals
+      @grid.each { |row| row << row_sum(row) }
     end
 
-    def column_totals data
+    def add_row_headers
+      @grid.each_with_index do |row, index|
+        row.unshift row_headers[index]
+      end
+    end
+
+    def calculate_column_totals data
       numeric_data = data.dup
-      numeric_data.map! { |row| row.select { |value| is_numeric? value } }
       numeric_data.transpose.map { |row| row_sum row }
     end
 
     def generate
-      headers = column_headers.unshift('') << 'Total'
-      rows    = insert_row_totals pivoted_row_data
-      totals  = column_totals(rows).unshift 'Total'
+      initialize_grid row_headers.size, column_headers.size, 0
+      populate_grid
+      calculate_row_totals
+      totals = calculate_column_totals @grid
 
       {
-          :headers => headers,
-          :rows    => rows,
-          :totals  => totals
+          :headers => ['', column_headers, 'Total'].flatten,
+          :rows    => add_row_headers,
+          :totals  => ['Total', totals].flatten
       }
     end
   end
