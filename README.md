@@ -1,5 +1,5 @@
-Pivot
-=====
+Pivot Table
+===========
 
 A handy tool for transforming a dataset into a spreadsheet-style pivot table.
 
@@ -14,7 +14,7 @@ Installation
 
 Couldn't be easier...
 
-    gem install pivot
+    gem install pivot_table
 
 There are no dependencies and pivot will work on any version of Ruby.
 
@@ -42,7 +42,7 @@ Let's say you have a dataset that looks like this (I'll use OpenStruct, but this
 
 You can then generate a pivot table like so...
 
-    p = Pivot::Table.new do |p|
+    p = PivotTable::Table.new do |p|
       p.data     = my_data
       p.column   = :quarter
       p.row      = :city
@@ -73,10 +73,10 @@ Ah, that's better.
 Still to come
 -------------
 
-Pivot is still in the very early stages of development. As my personal needs for evolve, I'll update the gem with new functionality accordingly.
+PivotTable is still in the very early stages of development. As my personal needs for evolve, I'll update the gem with new functionality accordingly.
 Feel free to fork and/or suggest new features.
 
-Contributing to Pivot
+Contributing to PivotTable
 ---------------------
 
 If you want to contribute:

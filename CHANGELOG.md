@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.0.3
+-----
+
+Renamed gem to pivot_table
+
 0.0.2
 -----
 
