@@ -1,4 +1,4 @@
-module Pivot
+module PivotTable
   class Table
 
     attr_accessor :data, :column, :row, :pivot_on

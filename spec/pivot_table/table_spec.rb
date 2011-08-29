@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Pivot
+module PivotTable
   describe Table do
     context 'accessors' do
       subject { Table.new }
