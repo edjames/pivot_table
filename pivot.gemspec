@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
+require File.expand_path('../lib/pivot', __FILE__)
 require 'base64'
 
 Gem::Specification.new do |s|
