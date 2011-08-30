@@ -31,7 +31,7 @@ module PivotTable
       it { should == @expected_result }
     end
 
-    context 'add row of column totals to a grid' do
+    context 'calculate column totals for a grid' do
       before do
         @data = [
             [1, 3, 5],
@@ -40,7 +40,7 @@ module PivotTable
 
         @expected_result = [3, 7, 11]
       end
-      subject { @instance.calculate_column_totals @data }
+      subject { @instance.column_totals @data }
       it { should == @expected_result }
     end
   end

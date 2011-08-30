@@ -11,7 +11,7 @@ module PivotTable
       grid.each { |row| row << array_sum(row) }
     end
 
-    def calculate_column_totals grid
+    def column_totals grid
       numeric_data = grid.dup
       numeric_data.transpose.map { |row| array_sum row }
     end

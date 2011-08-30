@@ -23,14 +23,14 @@ module PivotTable
       it { should == %w(One Two Zero) }
     end
 
-    context 'selecting matching data' do
+    context 'filtering data' do
       context 'non found' do
-        subject { @instance.matching_data @data, :row, 'Zero', :column, 'C' }
+        subject { @instance.filter @data, :row, 'Zero', :column, 'C' }
         it { should == [] }
       end
 
       context 'matches found' do
-        subject { @instance.matching_data @data, :row, 'One', :column, 'C' }
+        subject { @instance.filter @data, :row, 'One', :column, 'C' }
         it { should == [@data[2], @data[3]] }
       end
     end
