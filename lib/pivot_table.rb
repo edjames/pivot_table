@@ -1,4 +1,5 @@
 $: << File.dirname(__FILE__)
+require "pivot_table/reader"
 require "pivot_table/table"
 
 module PivotTable
