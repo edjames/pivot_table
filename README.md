@@ -76,6 +76,12 @@ Still to come
 PivotTable is still in the very early stages of development. As my personal needs for evolve, I'll update the gem with new functionality accordingly.
 Feel free to fork and/or suggest new features.
 
+Ruby 1.9 only...
+----------------
+
+Right now PivotTable only supports Ruby 1.9. If you need support for 1.8 please feel free to fork and merge. I will not however be adding
+support for 1.8.
+
 Contributing to PivotTable
 ---------------------
 
