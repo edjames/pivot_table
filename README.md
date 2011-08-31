@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/[edjames]/[pivot_table].png)](http://travis-ci.org/[edjames]/[pivot_table])
+
 Pivot Table
 ===========
 
