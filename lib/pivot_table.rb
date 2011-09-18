@@ -1,6 +1,6 @@
 $: << File.dirname(__FILE__)
-require "pivot_table/table"
+require "pivot_table/grid"
 
 module PivotTable
-  VERSION = "0.0.3"
+  VERSION = "0.1.0"
 end
