@@ -7,7 +7,7 @@ Why make this?
 --------------
 
 One of the most powerful and underrated features of spreadhseet packages is their ability to create pivot tables. I'm often asked
-to replicate this functionality in a web application...
+to replicate this functionality in a web application, so I decided to share. This is a simple gem for a specific job, I hope it helps.
 
 Installation
 ------------
@@ -26,42 +26,37 @@ At the very least, you will need to provide four things to create a pivot table.
 * a dataset (this doesn't necessarily have to be an ActiveRecord dataset, but it should at least behave like ActiveRecord e.g. OpenStruct)
 * the method to be used as column names
 * the method to be used as row names
-* the method to be used as the pivot
 
-Let's say you have a dataset that looks like this (I'll use OpenStruct, but this could easily be ActiveRecord, or even a custom object):
+Let's say you have a dataset that looks like this (I'll use OpenStruct, but this could easily be ActiveRecord or something similar):
 
-    my_data = []
-    my_data << OpenStruct.new(:city => 'London',   :quarter => 'Q1', :sales => 100)
-    my_data << OpenStruct.new(:city => 'London',   :quarter => 'Q2', :sales => 200)
-    my_data << OpenStruct.new(:city => 'London',   :quarter => 'Q3', :sales => 300)
-    my_data << OpenStruct.new(:city => 'London',   :quarter => 'Q4', :sales => 400)
-    my_data << OpenStruct.new(:city => 'New York', :quarter => 'Q1', :sales => 10)
-    my_data << OpenStruct.new(:city => 'New York', :quarter => 'Q2', :sales => 20)
-    my_data << OpenStruct.new(:city => 'New York', :quarter => 'Q3', :sales => 30)
-    my_data << OpenStruct.new(:city => 'New York', :quarter => 'Q4', :sales => 40)
+    data = []
+    data << OpenStruct.new(:city => 'London',   :quarter => 'Q1') # obj_1
+    data << OpenStruct.new(:city => 'London',   :quarter => 'Q2') # obj_2
+    data << OpenStruct.new(:city => 'London',   :quarter => 'Q3') # obj_3
+    data << OpenStruct.new(:city => 'London',   :quarter => 'Q4') # obj_4
+    data << OpenStruct.new(:city => 'New York', :quarter => 'Q1') # obj_5
+    data << OpenStruct.new(:city => 'New York', :quarter => 'Q2') # obj_6
+    data << OpenStruct.new(:city => 'New York', :quarter => 'Q3') # obj_7
+    data << OpenStruct.new(:city => 'New York', :quarter => 'Q4') # obj_8
 
 You can then generate a pivot table like so...
 
     p = PivotTable::Table.new do |p|
-      p.data     = my_data
+      p.data     = data
       p.column   = :quarter
       p.row      = :city
-      p.pivot_on = :sales
     end
-    p.generate
 
-...which will give you a hash that looks like this...
+...which will give you a result object that looks like this...
 
-    {
-      :headers => ['', 'Q1', 'Q2', 'Q3', 'Q4', 'Total'],
-      :rows => [
-        ['London',  100, 200, 300, 400, 1000],
-        ['New York', 10,  20,  30,  40, 100]
-      ],
-      :totals => ['Total', 110, 220, 330, 440, 1100]
-    }
+    result = p.build
+    result.headers # ['Q1', 'Q2', 'Q3', 'Q4']
+    result.rows    # [
+                   #   ['London',   obj_1, obj_2, obj_3, obj_4],
+                   #   ['New York', obj_5, obj_6, obj_7, obj_8]
+                   # ]
 
-...which makes it easy-peasy to print a pivot table that looks like this...
+...which makes it easy-peasy to print a pivot table that looks like this (with s little work in your view)...
 
                Q1    Q2    Q3    Q4   Total
     London    100   200   300   400    1000
@@ -76,7 +71,7 @@ Still to come
 PivotTable is still in the very early stages of development. As my personal needs for evolve, I'll update the gem with new functionality accordingly.
 Feel free to fork and/or suggest new features.
 
-Ruby 1.9 only...
+Ruby 1.9 only...for now
 ----------------
 
 Right now PivotTable only supports Ruby 1.9. If you need support for 1.8 please feel free to fork and merge. I will not however be adding

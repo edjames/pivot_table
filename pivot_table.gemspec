@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = Base64.decode64("ZWQuamFtZXMuZW1haWxAZ21haWwuY29t\n")
   s.homepage    = "https://github.com/edjames/pivot_table"
   s.summary     = "pivot_table-#{s.version}"
-  s.description = "Transform an ActiveRecord-ish data set into pivot table"
+  s.description = "Transform an ActiveRecord-ish data set into a pivot table of objects"
 
   s.platform    = Gem::Platform::RUBY
   s.required_ruby_version = '>= 1.9'
