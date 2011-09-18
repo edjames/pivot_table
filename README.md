@@ -1,6 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/edjames/pivot_table.png)](http://travis-ci.org/edjames/pivot_table)
-
-Pivot Table
+Pivot Table  [![Build Status](https://secure.travis-ci.org/edjames/pivot_table.png)](http://travis-ci.org/edjames/pivot_table)
 ===========
 
 A handy tool for transforming a dataset into a spreadsheet-style pivot table.
