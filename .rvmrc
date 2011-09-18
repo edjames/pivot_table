@@ -1,21 +1,21 @@
-ruby_version="1.9.2"
-gemset_name="pivot"
+#!/usr/bin/env bash
 
-ok="\033[10;32m"
-warn="\033[1;31m"
-reset="\033[0m"
+environment_id="ruby-1.9.2-p290@pivot_table"
 
-if rvm list strings | grep -q "${ruby_version}" ; then
-  rvm use ${ruby_version}
+if [[ -d "${rvm_path:-$HOME/.rvm}/environments" \
+  && -s "${rvm_path:-$HOME/.rvm}/environments/$environment_id" ]]
+then
+  \. "${rvm_path:-$HOME/.rvm}/environments/$environment_id"
 
-  if rvm gemset list | grep -q "${gemset_name}" ; then
-    echo -e "${ok}Using the ${gemset_name} gemset${reset}"
-    rvm gemset use ${gemset_name}
-  else
-    echo -e "${ok}The ${gemset_name} gemset does not exist, using global gemset${reset}"
+  if [[ -s "${rvm_path:-$HOME/.rvm}/hooks/after_use" ]]
+  then
+    . "${rvm_path:-$HOME/.rvm}/hooks/after_use"
   fi
-
 else
-  echo -e "${warn}You do not have the required Ruby installed: ${ruby_version}${reset}"
-
+  # If the environment file has not yet been created, use the RVM CLI to select.
+  if ! rvm --create  "$environment_id"
+  then
+    echo "Failed to create RVM environment '${environment_id}'."
+    exit 1
+  fi
 fi
