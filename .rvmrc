@@ -11,6 +11,7 @@ then
   then
     . "${rvm_path:-$HOME/.rvm}/hooks/after_use"
   fi
+  echo "RVM environment: ${environment_id}"
 else
   # If the environment file has not yet been created, use the RVM CLI to select.
   if ! rvm --create  "$environment_id"

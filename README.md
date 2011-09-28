@@ -27,41 +27,69 @@ At the very least, you will need to provide four things to create a pivot table.
 * the method to be used as column names
 * the method to be used as row names
 
-Let's say you have a dataset that looks like this (I'll use OpenStruct, but this could easily be ActiveRecord or something similar):
+Let's say you have a collection of Order objects that looks like this:
 
-    data = []
-    data << OpenStruct.new(:city => 'London',   :quarter => 'Q1') # obj_1
-    data << OpenStruct.new(:city => 'London',   :quarter => 'Q2') # obj_2
-    data << OpenStruct.new(:city => 'London',   :quarter => 'Q3') # obj_3
-    data << OpenStruct.new(:city => 'London',   :quarter => 'Q4') # obj_4
-    data << OpenStruct.new(:city => 'New York', :quarter => 'Q1') # obj_5
-    data << OpenStruct.new(:city => 'New York', :quarter => 'Q2') # obj_6
-    data << OpenStruct.new(:city => 'New York', :quarter => 'Q3') # obj_7
-    data << OpenStruct.new(:city => 'New York', :quarter => 'Q4') # obj_8
+    obj_1 = Order.new(:city => 'London',   :quarter => 'Q1')
+    obj_2 = Order.new(:city => 'London',   :quarter => 'Q2')
+    obj_3 = Order.new(:city => 'London',   :quarter => 'Q3')
+    obj_4 = Order.new(:city => 'London',   :quarter => 'Q4')
+    obj_5 = Order.new(:city => 'New York', :quarter => 'Q1')
+    obj_6 = Order.new(:city => 'New York', :quarter => 'Q2')
+    obj_7 = Order.new(:city => 'New York', :quarter => 'Q3')
+    obj_8 = Order.new(:city => 'New York', :quarter => 'Q4')
 
-You can then generate a pivot table like so...
+    data = [ obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8 ]
 
-    p = PivotTable::Table.new do |p|
-      p.data     = data
-      p.column   = :quarter
-      p.row      = :city
+Instantiate a new PivotTable::Grid object like this...
+
+    grid = PivotTable::Grid.new do |g|
+      g.sourcedata   = data
+      g.column_name  = :quarter
+      g.row_name     = :city
     end
 
-...which will give you a result object that looks like this...
 
-    result = p.build
-    result.headers # ['Q1', 'Q2', 'Q3', 'Q4']
-    result.rows    # [
-                   #   ['London',   obj_1, obj_2, obj_3, obj_4],
-                   #   ['New York', obj_5, obj_6, obj_7, obj_8]
-                   # ]
+All you have to do now is build the grid...
 
-...which makes it easy-peasy to print a pivot table that looks like this (with s little work in your view)...
+    g.build
 
-               Q1    Q2    Q3    Q4   Total
-    London    100   200   300   400    1000
-    New York   10    20    30    40     100
-    Total     110   220   330   440    1100
+This will give you a logical grid (represented by an two-dimensional array) which can be likened to this table:
+
+    --------------------------------------------
+    |          |  Q1   |  Q2   |  Q3   |  Q4   |
+    |----------|--------------------------------
+    | London   | obj_1 | obj_2 | obj_3 | obj_4 |
+    | New York | obj_5 | obj_6 | obj_7 | obj_8 |
+    --------------------------------------------
+
+Then you have the following aspects of the pivot table grid available to you...
+
+    g.row_headers => ['London', 'New York']
+    g.rows.length => 2
+
+    g.rows[0].header => 'London'
+    g.rows[0].data   => [obj_1, obj_2, obj_3, obj_4]
+
+    g.rows[1].header => 'New York'
+    g.rows[1].data   => [obj_5, obj_6, obj_7, obj_8]
+
+    g.column_headers => ['Q1', 'Q2', 'Q3', 'Q4']
+    g.columns.length => 4
+
+    g.columns[0].header => 'Q1'
+    g.columns[0].data   => [obj_1, obj_5]
+
+    g.columns[1].header => 'Q2'
+    g.columns[1].data   => [obj_2, obj_6]
+
+    g.columns[2].header => 'Q3'
+    g.columns[2].data   => [obj_3, obj_7]
+
+    g.columns[3].header => 'Q4'
+    g.columns[3].data   => [obj_4, obj_8]
+
+The API should give you a lot of flexibility with regards to rendering this information in your views.
+E.g. The rows and columns collections make it very easy to produce horizontal, vertical and overall total values.
 
 Ah, that's better.
 
