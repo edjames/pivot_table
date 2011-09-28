@@ -17,13 +17,15 @@ module PivotTable
 
     let(:column_headers) { %w(c1 c2 c3) }
     let(:row_headers) { %w(r1 r2) }
-    let(:row_1) { ['r1', d1, d2, d3] }
-    let(:row_2) { ['r2', d4, d5, d6] }
-    let(:grid) { [row_1, row_2] }
+    let(:row_0) { [d1, d2, d3] }
+    let(:row_1) { [d4, d5, d6] }
+    let(:column_0) { [d1, d4] }
+    let(:column_1) { [d2, d5] }
+    let(:column_2) { [d3, d6] }
 
     let(:instance) do
       Grid.new do |g|
-        g.data        = data
+        g.source_data = data
         g.row_name    = :row_name
         g.column_name = :column_name
       end
@@ -31,54 +33,80 @@ module PivotTable
 
     context 'accessors' do
       subject { Grid.new }
-      it { should respond_to :data }
+      it { should respond_to :source_data }
       it { should respond_to :row_name }
       it { should respond_to :column_name }
-    end
-
-
-    context 'build result' do
-      subject { instance.build }
-
-      it { should respond_to :headers }
+      it { should respond_to :columns }
       it { should respond_to :rows }
-      specify { subject.headers.should == column_headers }
-      specify { subject.rows.should == [row_1, row_2] }
     end
 
-    context 'column headers' do
-      subject { instance.column_headers }
-      it { should == column_headers }
+    describe 'build' do
+      subject { instance.build }
+      its(:class) { should == Grid }
     end
 
-    context 'row headers' do
-      subject { instance.row_headers }
-      it { should == row_headers }
+    describe 'columns' do
+      let(:build_result) { instance.build }
+      specify { build_result.columns.length.should == 3 }
+
+      context 'column headers' do
+        subject { build_result.column_headers }
+        it { should == column_headers }
+      end
+
+      context '1st column' do
+        subject { build_result.columns[0] }
+        its(:header) { should == column_headers[0] }
+        its(:data) { should = column_0 }
+      end
+
+      context '2nd column' do
+        subject { build_result.columns[1] }
+        its(:header) { should == column_headers[1] }
+        its(:data) { should = column_1 }
+      end
+
+      context '3rd column' do
+        subject { build_result.columns[2] }
+        its(:header) { should == column_headers[2] }
+        its(:data) { should = column_2 }
+      end
     end
 
-    context 'result grid' do
-      context 'initializing the grid' do
-        subject { instance.prepare_grid }
+    describe 'rows' do
+      let(:build_result) { instance.build }
+      specify { build_result.rows.length.should == 2 }
+
+      context 'row headers' do
+        subject { build_result.row_headers }
+        it { should == row_headers }
+      end
+
+      context '1st row' do
+        subject { build_result.rows[0] }
+        its(:header) { should == row_headers[0] }
+        its(:data) { should = row_0 }
+      end
+
+      context '2nd row' do
+        subject { build_result.rows[1] }
+        its(:header) { should == row_headers[1] }
+        its(:data) { should = row_1 }
+      end
+    end
+
+    describe 'data grid' do
+      let(:build_result) { instance.build }
+
+      context 'preparing the grid' do
+        subject { build_result.prepare_grid }
         it { should == [[nil, nil, nil], [nil, nil, nil]] }
       end
 
-      context 'with balanced data' do
-        subject { instance.grid_of_objects }
-        specify { subject.length.should == 2 }
-        specify { subject[0].should == row_1 }
-        specify { subject[1].should == row_2 }
-      end
-
-      context 'with unbalanced data' do
-        let(:new_object) { build_object(1, 'r1', 'c4') }
-        before do
-          data << new_object
-        end
-        subject { instance.grid_of_objects }
-        specify { subject.length.should == 2 }
-        specify { subject[0].should == row_1 << new_object }
+      context 'populating the grid' do
+        subject { build_result.data_grid }
+        it { should == [[d1, d2, d3], [d4, d5, d6]] }
       end
     end
-
   end
 end
