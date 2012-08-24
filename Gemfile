@@ -6,12 +6,12 @@ gemspec
 gem 'rake'
 
 group :development, :test do
-  gem 'autotest'
+  #gem 'autotest'
   #gem 'autotest-growl'
-  gem 'autotest-notification'
+  #gem 'autotest-notification'
   gem 'bundler'
-  gem 'launchy'
-  gem 'rcov'
+  #gem 'launchy'
+  #gem 'rcov'
   gem 'rspec'
   gem 'shoulda-matchers'
 end
