@@ -16,12 +16,12 @@ Couldn't be easier...
 
     gem install pivot_table
 
-There are no dependencies and pivot will work on any version of Ruby.
+There are no dependencies and pivot *should* work on any version of Ruby.
 
 Usage
 -----
 
-At the very least, you will need to provide four things to create a pivot table...
+At the very least, you will need to provide three things to create a pivot table...
 
 * a dataset (this doesn't necessarily have to be an ActiveRecord dataset, but it should at least behave like ActiveRecord e.g. OpenStruct)
 * the method to be used as column names
