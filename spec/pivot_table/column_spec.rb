@@ -16,7 +16,6 @@ module PivotTable
 
       its(:header) { should == 'header' }
       its(:data) { should == 'data' }
-      its(:total) { should == 'total' }
     end
 
   end

@@ -22,12 +22,16 @@ module PivotTable
     let(:column_0) { [d1, d4] }
     let(:column_1) { [d2, d5] }
     let(:column_2) { [d3, d6] }
+    let(:column_totals) { [d1.id + d4.id, d2.id + d5.id, d3.id + d6.id] }
+    let(:row_totals) { [d1.id + d2.id + d3.id, d4.id + d5.id + d6.id] }
+    let(:grand_total) { d1.id + d2.id + d3.id + d4.id + d5.id + d6.id }
 
     let(:instance) do
       Grid.new do |g|
         g.source_data = data
         g.row_name    = :row_name
         g.column_name = :column_name
+        g.value_name  = :id
       end
     end
 
@@ -38,6 +42,7 @@ module PivotTable
       it { should respond_to :column_name }
       it { should respond_to :columns }
       it { should respond_to :rows }
+      it { should respond_to :grand_total }
     end
 
     describe 'build' do
@@ -58,18 +63,21 @@ module PivotTable
         subject { build_result.columns[0] }
         its(:header) { should == column_headers[0] }
         its(:data) { should = column_0 }
+        its(:total) { should == column_totals[0] }
       end
 
       context '2nd column' do
         subject { build_result.columns[1] }
         its(:header) { should == column_headers[1] }
         its(:data) { should = column_1 }
+        its(:total) { should == column_totals[1] }
       end
 
       context '3rd column' do
         subject { build_result.columns[2] }
         its(:header) { should == column_headers[2] }
         its(:data) { should = column_2 }
+        its(:total) { should == column_totals[2] }
       end
     end
 
@@ -86,12 +94,14 @@ module PivotTable
         subject { build_result.rows[0] }
         its(:header) { should == row_headers[0] }
         its(:data) { should = row_0 }
+        its(:total) { should == row_totals[0] }
       end
 
       context '2nd row' do
         subject { build_result.rows[1] }
         its(:header) { should == row_headers[1] }
         its(:data) { should = row_1 }
+        its(:total) { should == row_totals[1] }
       end
     end
 
@@ -106,6 +116,13 @@ module PivotTable
       context 'populating the grid' do
         subject { build_result.data_grid }
         it { should == [[d1, d2, d3], [d4, d5, d6]] }
+      end
+
+      context 'totals' do
+        subject { build_result }
+        its(:column_totals) { should == column_totals }
+        its(:row_totals) { should == row_totals }
+        its(:grand_total) { should == grand_total }
       end
     end
   end
