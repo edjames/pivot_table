@@ -62,21 +62,21 @@ module PivotTable
       context '1st column' do
         subject { build_result.columns[0] }
         its(:header) { should == column_headers[0] }
-        its(:data) { should = column_0 }
+        its(:data) { should == column_0 }
         its(:total) { should == column_totals[0] }
       end
 
       context '2nd column' do
         subject { build_result.columns[1] }
         its(:header) { should == column_headers[1] }
-        its(:data) { should = column_1 }
+        its(:data) { should == column_1 }
         its(:total) { should == column_totals[1] }
       end
 
       context '3rd column' do
         subject { build_result.columns[2] }
         its(:header) { should == column_headers[2] }
-        its(:data) { should = column_2 }
+        its(:data) { should == column_2 }
         its(:total) { should == column_totals[2] }
       end
     end
@@ -93,14 +93,14 @@ module PivotTable
       context '1st row' do
         subject { build_result.rows[0] }
         its(:header) { should == row_headers[0] }
-        its(:data) { should = row_0 }
+        its(:data) { should == row_0 }
         its(:total) { should == row_totals[0] }
       end
 
       context '2nd row' do
         subject { build_result.rows[1] }
         its(:header) { should == row_headers[1] }
-        its(:data) { should = row_1 }
+        its(:data) { should == row_1 }
         its(:total) { should == row_totals[1] }
       end
     end
