@@ -46,8 +46,12 @@ Instantiate a new PivotTable::Grid object like this...
       g.source_data   = data
       g.column_name  = :quarter
       g.row_name     = :city
+      g.value_name   = :sales
     end
 
+
+The `value_name` parameter is only required if you want to access totals;
+the others are required.
 
 All you have to do now is build the grid...
 
@@ -92,6 +96,17 @@ The API should give you a lot of flexibility with regards to rendering this info
 E.g. The rows and columns collections make it very easy to produce horizontal, vertical and overall total values.
 
 Ah, that's better.
+
+If you want to get the totals for rows, columns, or the entire grid, you can pass a `value_name` as shown above, and then query the Grid like this:
+
+    g.column_totals
+    g.columns[0].total
+    g.columns[1].total
+    g.columns[2].total
+    g.row_totals
+    g.rows[0].total
+    g.rows[1].total
+    g.grand_total
 
 Still to come
 -------------
