@@ -14,7 +14,7 @@ module PivotTable
     end
 
     def total
-      data.inject(0){|t,x| t + x.send(value_name)}
+      data.inject(0){|t,x| t + (x ? x.send(value_name) : 0)}
     end
 
   end
