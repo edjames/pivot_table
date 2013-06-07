@@ -1,7 +1,7 @@
 module PivotTable
   class Grid
 
-    attr_accessor :source_data, :row_name, :column_name
+    attr_accessor :source_data, :row_name, :column_name, :value_name
     attr_reader :columns, :rows, :data_grid
 
     def initialize(&block)
@@ -18,14 +18,14 @@ module PivotTable
     def build_rows
       @rows = []
       @data_grid.each_with_index do |data, index|
-        @rows << Row.new(:header => row_headers[index], :data => data)
+        @rows << Row.new(:header => row_headers[index], :data => data, :value_name => value_name)
       end
     end
 
     def build_columns
       @columns = []
       @data_grid.transpose.each_with_index do |data, index|
-        @columns << Column.new(:header => column_headers[index], :data => data)
+        @columns << Column.new(:header => column_headers[index], :data => data, :value_name => value_name)
       end
     end
 
@@ -35,6 +35,18 @@ module PivotTable
 
     def row_headers
       headers @row_name
+    end
+
+    def column_totals
+      columns.map{|c| c.total}
+    end
+
+    def row_totals
+      rows.map{|r| r.total}
+    end
+
+    def grand_total
+      column_totals.inject(0){|t,x| t + x}
     end
 
     def prepare_grid

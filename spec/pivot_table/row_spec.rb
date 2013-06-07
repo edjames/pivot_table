@@ -12,11 +12,10 @@ module PivotTable
     it { should respond_to :total }
 
     context 'initialize with hash' do
-      subject { klass.new(header: 'header', data: 'data', total: 'total')}
+      subject { klass.new(header: 'header', data: 'data')}
 
       its(:header) { should == 'header' }
       its(:data) { should == 'data' }
-      its(:total) { should == 'total' }
     end
 
   end
