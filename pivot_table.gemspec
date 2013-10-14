@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 
   s.platform    = Gem::Platform::RUBY
   s.required_ruby_version = '>= 1.9'
-  
+
   s.rubyforge_project = "pivot_table"
   s.rubygems_version = ">= 1.6.1"
   s.files         = `git ls-files`.split("\n")
