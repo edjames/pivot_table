@@ -1,25 +1,20 @@
-Pivot Table  [![Build Status](https://secure.travis-ci.org/edjames/pivot_table.png)](http://travis-ci.org/edjames/pivot_table) [![Code Climate](https://codeclimate.com/github/edjames/pivot_table.png)](https://codeclimate.com/github/edjames/pivot_table)
-===========
+# Pivot Table  [![Build Status](https://secure.travis-ci.org/edjames/pivot_table.png)](http://travis-ci.org/edjames/pivot_table) [![Code Climate](https://codeclimate.com/github/edjames/pivot_table.png)](https://codeclimate.com/github/edjames/pivot_table)
+
 
 A handy tool for transforming a dataset into a spreadsheet-style pivot table.
 
-Why make this?
---------------
+### Why make this?
 
 One of the most powerful and underrated features of spreadhseet packages is their ability to create pivot tables. I'm often asked
 to replicate this functionality in a web application, so I decided to share. This is a simple gem for a specific job, I hope it helps.
 
-Installation
-------------
+### Installation
 
 Couldn't be easier...
 
     gem install pivot_table
 
-There are no dependencies and pivot *should* work on any version of Ruby.
-
-Usage
------
+### Usage
 
 At the very least, you will need to provide three things to create a pivot table...
 
@@ -108,17 +103,12 @@ If you want to get the totals for rows, columns, or the entire grid, you can pas
     g.rows[1].total
     g.grand_total
 
-Still to come
--------------
 
-PivotTable is still in the very early stages of development. As my personal needs for evolve, I'll update the gem with new functionality accordingly.
-Feel free to fork and/or suggest new features.
-
-Ruby 1.9 only...for now
+### Ruby Support
 ----------------
 
-Right now PivotTable only supports Ruby 1.9. If you need support for 1.8 please feel free to fork and merge. I will not however be adding
-support for 1.8.
+* 1.9.3
+* 2.0.0
 
 Contributing to PivotTable
 ---------------------
@@ -136,4 +126,4 @@ If you want to contribute:
 Copyright
 ---------
 
-Copyright (c) 2011 Ed James. See LICENSE for details.
+Copyright (c) 2013 Ed James. See LICENSE for details.
