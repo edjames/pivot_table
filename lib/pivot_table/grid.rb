@@ -18,14 +18,22 @@ module PivotTable
     def build_rows
       @rows = []
       @data_grid.each_with_index do |data, index|
-        @rows << Row.new(:header => row_headers[index], :data => data, :value_name => value_name)
+        @rows << Row.new(
+          :header     => row_headers[index],
+          :data       => data,
+          :value_name => value_name
+        )
       end
     end
 
     def build_columns
       @columns = []
       @data_grid.transpose.each_with_index do |data, index|
-        @columns << Column.new(:header => column_headers[index], :data => data, :value_name => value_name)
+        @columns << Column.new(
+          :header     => column_headers[index],
+          :data       => data,
+          :value_name => value_name
+        )
       end
     end
 
@@ -38,15 +46,15 @@ module PivotTable
     end
 
     def column_totals
-      columns.map{|c| c.total}
+      columns.map { |c| c.total }
     end
 
     def row_totals
-      rows.map{|r| r.total}
+      rows.map { |r| r.total }
     end
 
     def grand_total
-      column_totals.inject(0){|t,x| t + x}
+      column_totals.inject(0) { |t, x| t + x }
     end
 
     def prepare_grid
@@ -70,7 +78,8 @@ module PivotTable
     end
 
     private
-    def headers method
+
+    def headers(method)
       @source_data.collect { |c| c.send method }.uniq.sort
     end
 

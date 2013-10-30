@@ -38,7 +38,7 @@ Let's say you have a collection of Order objects that looks like this:
 Instantiate a new PivotTable::Grid object like this...
 
     grid = PivotTable::Grid.new do |g|
-      g.source_data   = data
+      g.source_data  = data
       g.column_name  = :quarter
       g.row_name     = :city
       g.value_name   = :sales
