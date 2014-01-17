@@ -125,5 +125,105 @@ module PivotTable
         its(:grand_total) { should == grand_total }
       end
     end
+
+    context 'keep original data ordering' do
+      let(:data) { [d6, d4, d5, d3, d2, d1] }
+
+      let(:column_headers) { %w(c3 c1 c2) }
+      let(:row_headers) { %w(r2 r1) }
+      let(:row_0) { [d6, d4, d5] }
+      let(:row_1) { [d3, d1, d2] }
+      let(:column_0) { [d6, d3] }
+      let(:column_1) { [d4, d1] }
+      let(:column_2) { [d5, d2] }
+      let(:column_totals) { [d6.id + d3.id, d4.id + d1.id, d5.id + d2.id] }
+      let(:row_totals) { [d6.id + d4.id + d5.id, d3.id + d2.id + d1.id] }
+      let(:grand_total) { d1.id + d2.id + d3.id + d4.id + d5.id + d6.id }
+
+      let(:instance) do
+        Grid.new(:sort => false) do |g|
+          g.source_data = data
+          g.row_name    = :row_name
+          g.column_name = :column_name
+          g.value_name  = :id
+        end
+      end
+
+      describe 'columns' do
+        let(:build_result) { instance.build }
+        specify { build_result.columns.length.should == 3 }
+
+        context 'column headers' do
+          subject { build_result.column_headers }
+          it { should == column_headers }
+        end
+
+        context '1st column' do
+          subject { build_result.columns[0] }
+          its(:header) { should == column_headers[0] }
+          its(:data) { should == column_0 }
+          its(:total) { should == column_totals[0] }
+        end
+
+        context '2nd column' do
+          subject { build_result.columns[1] }
+          its(:header) { should == column_headers[1] }
+          its(:data) { should == column_1 }
+          its(:total) { should == column_totals[1] }
+        end
+
+        context '3rd column' do
+          subject { build_result.columns[2] }
+          its(:header) { should == column_headers[2] }
+          its(:data) { should == column_2 }
+          its(:total) { should == column_totals[2] }
+        end
+      end
+
+      describe 'rows' do
+        let(:build_result) { instance.build }
+        specify { build_result.rows.length.should == 2 }
+
+        context 'row headers' do
+          subject { build_result.row_headers }
+          it { should == row_headers }
+        end
+
+        context '1st row' do
+          subject { build_result.rows[0] }
+          its(:header) { should == row_headers[0] }
+          its(:data) { should == row_0 }
+          its(:total) { should == row_totals[0] }
+        end
+
+        context '2nd row' do
+          subject { build_result.rows[1] }
+          its(:header) { should == row_headers[1] }
+          its(:data) { should == row_1 }
+          its(:total) { should == row_totals[1] }
+        end
+      end
+
+      describe 'data grid' do
+        let(:build_result) { instance.build }
+
+        context 'preparing the grid' do
+          subject { build_result.prepare_grid }
+          it { should == [[nil, nil, nil], [nil, nil, nil]] }
+        end
+
+        context 'populating the grid' do
+          subject { build_result.data_grid }
+          it { should == [[d6, d4, d5], [d3, d1, d2]] }
+        end
+
+        context 'totals' do
+          subject { build_result }
+          its(:column_totals) { should == column_totals }
+          its(:row_totals) { should == row_totals }
+          its(:grand_total) { should == grand_total }
+        end
+      end
+    end
   end
 end

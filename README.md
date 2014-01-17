@@ -1,5 +1,4 @@
-# Pivot Table  [![Build Status](https://secure.travis-ci.org/edjames/pivot_table.png)](http://travis-ci.org/edjames/pivot_table) [![Code Climate](https://codeclimate.com/github/edjames/pivot_table.png)](https://codeclimate.com/github/edjames/pivot_table)
-
+# Pivot Table  [![Build Status](https://secure.travis-ci.org/edjames/pivot_table.png)](http://travis-ci.org/edjames/pivot_table) [![Code Climate](https://codeclimate.com/github/edjames/pivot_table.png)](https://codeclimate.com/github/edjames/pivot_table) [![Dependency Status](https://gemnasium.com/edjames/pivot_table.png)](https://gemnasium.com/edjames/pivot_table)
 
 A handy tool for transforming a dataset into a spreadsheet-style pivot table.
 
@@ -103,15 +102,35 @@ If you want to get the totals for rows, columns, or the entire grid, you can pas
     g.rows[1].total
     g.grand_total
 
+#### Configuration Options
+
+You can also provide additional configuration options when instantiating your Grid. Options are provided as a hash e.g.
+
+    grid = PivotTable::Grid.new(:sort => true) do |g|
+      g.source_data  = data
+      g.column_name  = :quarter
+      g.row_name     = :city
+      g.value_name   = :sales
+    end
+
+Here are the available configuration options:
+
+###### 1. Sort
+
+**Usage:** `:sort => false`
+
+**Default:** `true`
+
+This option will automatically sort your data alphabetically based on your column and row headers. If you disable sorting your original data ordering will be preserved.
+
 
 ### Ruby Support
-----------------
 
 * 1.9.3
 * 2.0.0
+* 2.1.0
 
-Contributing to PivotTable
----------------------
+### Contributing to PivotTable
 
 If you want to contribute:
 
@@ -123,7 +142,6 @@ If you want to contribute:
 * Make sure to add tests for it. This is important so I don’t break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history.
 
-Copyright
----------
+### Copyright
 
-Copyright (c) 2013 Ed James. See LICENSE for details.
+Copyright (c) 2014 Ed James. See LICENSE for details.

@@ -2,10 +2,15 @@ module PivotTable
   class Grid
 
     attr_accessor :source_data, :row_name, :column_name, :value_name
-    attr_reader :columns, :rows, :data_grid
+    attr_reader :columns, :rows, :data_grid, :configuration
 
-    def initialize(&block)
+    DEFAULT_OPTIONS = {
+      :sort => true
+    }
+
+    def initialize(opts = {}, &block)
       yield(self) if block_given?
+      @configuration = Configuration.new(DEFAULT_OPTIONS.merge(opts))
     end
 
     def build
@@ -80,7 +85,8 @@ module PivotTable
     private
 
     def headers(method)
-      @source_data.collect { |c| c.send method }.uniq.sort
+      hdrs = @source_data.collect { |c| c.send method }.uniq
+      configuration.sort ? hdrs.sort : hdrs
     end
 
   end
