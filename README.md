@@ -1,4 +1,4 @@
-# Pivot Table  [![Build Status](https://secure.travis-ci.org/edjames/pivot_table.png)](http://travis-ci.org/edjames/pivot_table) [![Code Climate](https://codeclimate.com/github/edjames/pivot_table.png)](https://codeclimate.com/github/edjames/pivot_table) [![Dependency Status](https://gemnasium.com/edjames/pivot_table.png)](https://gemnasium.com/edjames/pivot_table)
+# Pivot Table  [![Build Status](https://secure.travis-ci.org/edjames/pivot_table.png)](http://travis-ci.org/edjames/pivot_table) [![Code Climate](https://codeclimate.com/github/edjames/pivot_table.png)](https://codeclimate.com/github/edjames/pivot_table) [![Dependency Status](https://gemnasium.com/edjames/pivot_table.png)](https://gemnasium.com/edjames/pivot_table) [![Gem Version](https://badge.fury.io/rb/pivot_table.png)](http://badge.fury.io/rb/pivot_table)
 
 A handy tool for transforming a dataset into a spreadsheet-style pivot table.
 
