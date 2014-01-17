@@ -1,5 +1,4 @@
 shared_examples "a cell collection" do
-
   it { should respond_to :header }
   it { should respond_to :data }
   it { should respond_to :value_name }
@@ -16,5 +15,4 @@ shared_examples "a cell collection" do
     its(:data) { should == attrs[:data] }
     its(:value_name) { should == attrs[:value_name] }
   end
-
 end
