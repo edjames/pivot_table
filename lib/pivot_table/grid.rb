@@ -1,7 +1,7 @@
 module PivotTable
   class Grid
 
-    attr_accessor :source_data, :row_name, :column_name, :value_name
+    attr_accessor :source_data, :row_name, :column_name, :value_name, :field_name
     attr_reader :columns, :rows, :data_grid, :configuration
 
     DEFAULT_OPTIONS = {
@@ -77,7 +77,9 @@ module PivotTable
       row_headers.each_with_index do |row, row_index|
         current_row = []
         column_headers.each_with_index do |col, col_index|
-          current_row[col_index] = @source_data.find { |item| item.send(row_name) == row && item.send(column_name) == col }
+          object = @source_data.find { |item| item.send(row_name) == row && item.send(column_name) == col }
+          has_field_name = field_name && object.respond_to?(field_name)
+          current_row[col_index] = has_field_name ? object.send(field_name) : object
         end
         @data_grid[row_index] = current_row
       end
@@ -90,6 +92,5 @@ module PivotTable
       hdrs = @source_data.collect { |c| c.send method }.uniq
       configuration.sort ? hdrs.sort : hdrs
     end
-
   end
 end
