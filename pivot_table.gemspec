@@ -15,13 +15,13 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9'
 
   s.rubyforge_project = "pivot_table"
-  s.rubygems_version  = ">= 1.6.1"
+  s.rubygems_version  = "~> 2.2"
   s.executables       = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.files             = `git ls-files`.split("\n")
   s.test_files        = `git ls-files -- {spec,features}/*`.split("\n")
   s.require_paths     = ["lib"]
 
-  s.add_development_dependency "rspec", "~> 2.14"
+  s.add_development_dependency "rspec", "~> 3.1"
   s.add_development_dependency "growl", "~> 1.0"
-  s.add_development_dependency "guard-rspec", "~> 4.2"
+  s.add_development_dependency "guard-rspec", "~> 4.3"
 end

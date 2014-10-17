@@ -1,2 +1,4 @@
---colour
+--color
 --format progress
+--require pivot_table_helper
+--require spec_helper

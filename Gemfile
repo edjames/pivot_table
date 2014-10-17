@@ -5,6 +5,7 @@ gem 'rake'
 
 group :development, :test do
   gem 'rspec'
+  gem 'rspec-its'
   gem 'growl'
-  gem 'guard-rspec'
+  gem 'guard-rspec', require: false
 end

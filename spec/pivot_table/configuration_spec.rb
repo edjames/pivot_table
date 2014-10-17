@@ -7,7 +7,7 @@ module PivotTable
 
     let(:opts) { { :sort => true, :other_setting => 'on' } }
 
-    its(:sort) { should be_true }
+    its(:sort) { should eq true }
     its(:other_setting) { should == 'on' }
 
     context 'when setting does not exist' do
