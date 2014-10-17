@@ -4,12 +4,12 @@ module PivotTable
   describe Grid do
 
     context 'accessors' do
-      it { should respond_to :source_data }
-      it { should respond_to :row_name }
-      it { should respond_to :column_name }
-      it { should respond_to :columns }
-      it { should respond_to :rows }
-      it { should respond_to :grand_total }
+      it { is_expected.to respond_to :source_data }
+      it { is_expected.to respond_to :row_name }
+      it { is_expected.to respond_to :column_name }
+      it { is_expected.to respond_to :columns }
+      it { is_expected.to respond_to :rows }
+      it { is_expected.to respond_to :grand_total }
     end
 
     let(:d1) { build_data_object(1, 'r1', 'c1') }

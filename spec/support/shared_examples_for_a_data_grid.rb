@@ -3,18 +3,18 @@ shared_examples 'a data grid' do
 
   context 'preparing the grid' do
     subject { build_result.prepare_grid }
-    it { should == [[nil, nil, nil], [nil, nil, nil]] }
+    it { is_expected.to eq [[nil, nil, nil], [nil, nil, nil]] }
   end
 
   context 'populating the grid' do
     subject { build_result.data_grid }
-    it { should == [row_0, row_1] }
+    it { is_expected.to eq [row_0, row_1] }
   end
 
   context 'totals' do
     subject { build_result }
-    its(:column_totals) { should == column_totals }
-    its(:row_totals) { should == row_totals }
-    its(:grand_total) { should == grand_total }
+    its(:column_totals) { is_expected.to eq column_totals }
+    its(:row_totals) { is_expected.to eq row_totals }
+    its(:grand_total) { is_expected.to eq grand_total }
   end
 end
