@@ -23,20 +23,20 @@ At the very least, you will need to provide three things to create a pivot table
 
 Let's say you have a collection of Order objects that looks like this:
 
-    obj_1 = Order.new(:city => 'London',   :quarter => 'Q1')
-    obj_2 = Order.new(:city => 'London',   :quarter => 'Q2')
-    obj_3 = Order.new(:city => 'London',   :quarter => 'Q3')
-    obj_4 = Order.new(:city => 'London',   :quarter => 'Q4')
-    obj_5 = Order.new(:city => 'New York', :quarter => 'Q1')
-    obj_6 = Order.new(:city => 'New York', :quarter => 'Q2')
-    obj_7 = Order.new(:city => 'New York', :quarter => 'Q3')
-    obj_8 = Order.new(:city => 'New York', :quarter => 'Q4')
+    obj_1 = Order.new(city: 'London',   quarter: 'Q1')
+    obj_2 = Order.new(city: 'London',   quarter: 'Q2')
+    obj_3 = Order.new(city: 'London',   quarter: 'Q3')
+    obj_4 = Order.new(city: 'London',   quarter: 'Q4')
+    obj_5 = Order.new(city: 'New York', quarter: 'Q1')
+    obj_6 = Order.new(city: 'New York', quarter: 'Q2')
+    obj_7 = Order.new(city: 'New York', quarter: 'Q3')
+    obj_8 = Order.new(city: 'New York', quarter: 'Q4')
 
     data = [ obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8 ]
 
 Instantiate a new PivotTable::Grid object like this...
 
-    grid = PivotTable::Grid.new do |g|
+    g = PivotTable::Grid.new do |g|
       g.source_data  = data
       g.column_name  = :quarter
       g.row_name     = :city
@@ -65,26 +65,32 @@ Then you have the following aspects of the pivot table grid available to you...
     g.row_headers => ['London', 'New York']
     g.rows.length => 2
 
-    g.rows[0].header => 'London'
-    g.rows[0].data   => [obj_1, obj_2, obj_3, obj_4]
+    g.rows[0].header            => 'London'
+    g.rows[0].data              => [obj_1, obj_2, obj_3, obj_4]
+    g.rows[0].column_data('Q2') => obj_2
 
-    g.rows[1].header => 'New York'
-    g.rows[1].data   => [obj_5, obj_6, obj_7, obj_8]
+    g.rows[1].header            => 'New York'
+    g.rows[1].data              => [obj_5, obj_6, obj_7, obj_8]
+    g.rows[1].column_data('Q2') => obj_6
 
     g.column_headers => ['Q1', 'Q2', 'Q3', 'Q4']
     g.columns.length => 4
 
-    g.columns[0].header => 'Q1'
-    g.columns[0].data   => [obj_1, obj_5]
+    g.columns[0].header             => 'Q1'
+    g.columns[0].data               => [obj_1, obj_5]
+    g.columns[0].row_data('London') => obj_1
 
-    g.columns[1].header => 'Q2'
-    g.columns[1].data   => [obj_2, obj_6]
+    g.columns[1].header             => 'Q2'
+    g.columns[1].data               => [obj_2, obj_6]
+    g.columns[1].row_data('London') => obj_2
 
-    g.columns[2].header => 'Q3'
-    g.columns[2].data   => [obj_3, obj_7]
+    g.columns[2].header             => 'Q3'
+    g.columns[2].data               => [obj_3, obj_7]
+    g.columns[2].row_data('London') => obj_3
 
-    g.columns[3].header => 'Q4'
-    g.columns[3].data   => [obj_4, obj_8]
+    g.columns[3].header             => 'Q4'
+    g.columns[3].data               => [obj_4, obj_8]
+    g.columns[3].row_data('London') => obj_4
 
 The API should give you a lot of flexibility with regards to rendering this information in your views.
 E.g. The rows and columns collections make it very easy to produce horizontal, vertical and overall total values.
@@ -106,7 +112,7 @@ If you want to get the totals for rows, columns, or the entire grid, you can pas
 
 You can also provide additional configuration options when instantiating your Grid. Options are provided as a hash e.g.
 
-    grid = PivotTable::Grid.new(:sort => true) do |g|
+    g = PivotTable::Grid.new(:sort => true) do |g|
       g.source_data  = data
       g.column_name  = :quarter
       g.row_name     = :city
@@ -117,7 +123,7 @@ Here are the available configuration options:
 
 ###### 1. Sort
 
-**Usage:** `:sort => false`
+**Usage:** `sort: false`
 
 **Default:** `true`
 
@@ -127,8 +133,7 @@ This option will automatically sort your data alphabetically based on your colum
 ### Ruby Support
 
 * 1.9.3
-* 2.0.0
-* 2.1.0
+* 2.x
 
 ### Contributing to PivotTable
 
