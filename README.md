@@ -15,11 +15,12 @@ Couldn't be easier...
 
 ### Usage
 
-At the very least, you will need to provide three things to create a pivot table...
+At the very least, you will need to provide four things to create a pivot table...
 
 * a dataset (this doesn't necessarily have to be an ActiveRecord dataset, but it should at least behave like ActiveRecord e.g. OpenStruct)
 * the method to be used as column names
 * the method to be used as row names
+* the method to be used as the pivot
 
 Let's say you have a collection of Order objects that looks like this:
 
