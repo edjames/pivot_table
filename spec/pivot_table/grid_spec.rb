@@ -7,6 +7,7 @@ module PivotTable
       it { is_expected.to respond_to :source_data }
       it { is_expected.to respond_to :row_name }
       it { is_expected.to respond_to :column_name }
+      it { is_expected.to respond_to :field_name}
       it { is_expected.to respond_to :columns }
       it { is_expected.to respond_to :rows }
       it { is_expected.to respond_to :grand_total }
@@ -89,6 +90,42 @@ module PivotTable
       it_behaves_like 'a collection of columns'
       it_behaves_like 'a collection of rows'
       it_behaves_like 'a data grid'
+    end
+
+    context 'populating the grid' do
+      let(:data) { unsorted_data }
+
+      context 'field_name is correct attribute' do
+        let(:instance) do
+          Grid.new do |g|
+            g.source_data      = data
+            g.row_name         = :row_name
+            g.column_name      = :column_name
+            g.value_name       = :id
+            g.field_name       = :id
+          end
+        end
+
+        let(:build_result) { instance.build }
+        subject { build_result.data_grid }
+        it { should == [[1, 2, 3], [4, 5, 6]] }
+      end
+
+      context 'field_name is wrong attribute' do
+        let(:instance) do
+          Grid.new do |g|
+            g.source_data      = data
+            g.row_name         = :row_name
+            g.column_name      = :column_name
+            g.value_name       = :id
+            g.field_name       = :wrong_attribute
+          end
+        end
+
+        let(:build_result) { instance.build }
+        subject { build_result.data_grid }
+        it { should == [[d1, d2, d3], [d4, d5, d6]] }
+      end
     end
   end
 end
