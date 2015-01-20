@@ -43,7 +43,6 @@ Instantiate a new PivotTable::Grid object like this...
       g.value_name   = :sales
     end
 
-
 The `value_name` parameter is only required if you want to access totals;
 the others are required.
 
@@ -95,8 +94,6 @@ Then you have the following aspects of the pivot table grid available to you...
 The API should give you a lot of flexibility with regards to rendering this information in your views.
 E.g. The rows and columns collections make it very easy to produce horizontal, vertical and overall total values.
 
-Ah, that's better.
-
 If you want to get the totals for rows, columns, or the entire grid, you can pass a `value_name` as shown above, and then query the Grid like this:
 
     g.column_totals
@@ -108,6 +105,49 @@ If you want to get the totals for rows, columns, or the entire grid, you can pas
     g.rows[1].total
     g.grand_total
 
+##### Specifying the pivot field
+
+You can also specify the field name which should be used as the pivot. Typically you would use this when you want to pivot on a string field which cannot be aggregated.
+
+This option will generate a simplified grid which will contain the specified field value instead of the objects.
+
+Consider the following data (similar to above):
+
+    obj_1 = Order.new(city: 'London',   quarter: 'Q1', top_sales: 'Ed')
+    obj_2 = Order.new(city: 'London',   quarter: 'Q2', top_sales: 'Jim')
+    obj_3 = Order.new(city: 'London',   quarter: 'Q3', top_sales: 'Sam')
+    obj_4 = Order.new(city: 'London',   quarter: 'Q4', top_sales: 'Ed')
+    obj_5 = Order.new(city: 'New York', quarter: 'Q1', top_sales: 'Tom')
+    obj_6 = Order.new(city: 'New York', quarter: 'Q2', top_sales: 'Sandy')
+    obj_7 = Order.new(city: 'New York', quarter: 'Q3', top_sales: 'Phil')
+    obj_8 = Order.new(city: 'New York', quarter: 'Q4', top_sales: 'Jim')
+
+Instantiate a new PivotTable::Grid object, this time specifying the `field_name`:
+
+    g = PivotTable::Grid.new do |g|
+      g.source_data  = data
+      g.column_name  = :quarter
+      g.row_name     = :city
+      g.value_name   = :sales
+      g.field_name   = :top_sales
+    end
+
+Build the grid...
+
+    g.build
+
+This will give you a logical grid (represented by an two-dimensional array) which can be likened to this table:
+
+    --------------------------------------------
+    |          |  Q1   |  Q2   |  Q3   |  Q4   |
+    |----------|--------------------------------
+    | London   | Ed    | Jim   | Sam   | Ed    |
+    | New York | Tom   | Sandy | Phil  | Jim   |
+    --------------------------------------------
+
+Compare this to the first example above. It's simpler, if that's what you need.
+
+
 #### Configuration Options
 
 You can also provide additional configuration options when instantiating your Grid. Options are provided as a hash e.g.
@@ -116,7 +156,6 @@ You can also provide additional configuration options when instantiating your Gr
       g.source_data  = data
       g.column_name  = :quarter
       g.row_name     = :city
-      g.value_name   = :sales
     end
 
 Here are the available configuration options:
@@ -128,7 +167,6 @@ Here are the available configuration options:
 **Default:** `true`
 
 This option will automatically sort your data alphabetically based on your column and row headers. If you disable sorting your original data ordering will be preserved.
-
 
 ### Ruby Support
 
