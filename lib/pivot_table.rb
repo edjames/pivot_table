@@ -7,5 +7,5 @@ require 'pivot_table/column'
 require 'pivot_table/row'
 
 module PivotTable
-  VERSION = '0.4.0'
+  VERSION = '0.5.0'
 end
