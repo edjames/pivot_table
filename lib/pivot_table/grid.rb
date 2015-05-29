@@ -45,11 +45,11 @@ module PivotTable
     end
 
     def column_headers
-      headers @column_name
+      @column_headers ||= headers @column_name
     end
 
     def row_headers
-      headers @row_name
+      @row_headers ||= headers @row_name
     end
 
     def column_totals
