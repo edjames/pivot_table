@@ -7,6 +7,14 @@ A handy tool for transforming a dataset into a spreadsheet-style pivot table.
 One of the most powerful and underrated features of spreadhseet packages is their ability to create pivot tables. I'm often asked
 to replicate this functionality in a web application, so I decided to share. This is a simple gem for a specific job, I hope it helps.
 
+#### What this gem WILL do
+
+This gem provides a simple mechanism to handle the turning of a dataset into a cross-tabular format for display purposes. The gem will make it easy to display your data in the form of a pivot table.
+
+#### What this gem WILL NOT do
+
+This gem is *not* a data aggregation engine and it never will be. This gem expects an aggregated dataset. If you're looking for a gem to handle data aggregation then you're probably doing something wrong - that's what database engines are built for.
+
 ### Installation
 
 Couldn't be easier...
