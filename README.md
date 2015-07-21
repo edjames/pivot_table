@@ -13,7 +13,7 @@ This gem provides a simple mechanism to handle the turning of a dataset into a c
 
 #### What this gem WILL NOT do
 
-This gem is *not* a data aggregation engine and it never will be. This gem expects an aggregated dataset. If you're looking for a gem to handle data aggregation then you're probably doing something wrong - that's what database engines are built for.
+This gem is *not* a data aggregation engine (and it probably never will be). This gem expects an aggregated dataset. If you're looking for a gem to handle data aggregation then you may want to take a look at the [ruport](https://github.com/ruport/ruport) gem.
 
 ### Installation
 
