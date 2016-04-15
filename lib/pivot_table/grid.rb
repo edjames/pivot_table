@@ -75,13 +75,7 @@ module PivotTable
     def populate_grid
       prepare_grid
       row_headers.each_with_index do |row, row_index|
-        current_row = []
-        column_headers.each_with_index do |col, col_index|
-          object = @source_data.find { |item| item.send(row_name) == row && item.send(column_name) == col }
-          has_field_name = field_name && object.respond_to?(field_name)
-          current_row[col_index] = has_field_name ? object.send(field_name) : object
-        end
-        @data_grid[row_index] = current_row
+        @data_grid[row_index] = build_data_row(row)
       end
       @data_grid
     end
@@ -91,6 +85,33 @@ module PivotTable
     def headers(method)
       hdrs = @source_data.collect { |c| c.send method }.uniq
       configuration.sort ? hdrs.sort : hdrs
+    end
+
+    def build_data_row(row)
+      current_row = []
+      column_headers.each_with_index do |col, col_index|
+        current_row[col_index] = derive_row_value(row, col)
+      end
+      current_row
+    end
+
+    def find_data_item(row, col)
+      @source_data.find do |item|
+        item.send(row_name) == row && item.send(column_name) == col
+      end
+    end
+
+    def derive_row_value(row, col)
+      data_item = find_data_item(row, col)
+      if has_field_name?(data_item)
+        data_item.send(field_name)
+      else
+        data_item
+      end
+    end
+
+    def has_field_name?(data_item)
+      !!(field_name && data_item.respond_to?(field_name))
     end
   end
 end
