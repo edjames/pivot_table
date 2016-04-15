@@ -22,8 +22,8 @@ module PivotTable
 
     def build_rows
       @rows = []
-      @data_grid.each_with_index do |data, index|
-        @rows << Row.new(
+      data_grid.each_with_index do |data, index|
+        rows << Row.new(
           :header     => row_headers[index],
           :data       => data,
           :value_name => value_name,
@@ -34,8 +34,8 @@ module PivotTable
 
     def build_columns
       @columns = []
-      @data_grid.transpose.each_with_index do |data, index|
-        @columns << Column.new(
+      data_grid.transpose.each_with_index do |data, index|
+        columns << Column.new(
           :header           => column_headers[index],
           :data             => data,
           :value_name       => value_name,
@@ -45,11 +45,11 @@ module PivotTable
     end
 
     def column_headers
-      @column_headers ||= headers @column_name
+      @column_headers ||= headers column_name
     end
 
     def row_headers
-      @row_headers ||= headers @row_name
+      @row_headers ||= headers row_name
     end
 
     def column_totals
@@ -67,23 +67,23 @@ module PivotTable
     def prepare_grid
       @data_grid = []
       row_headers.count.times do
-        @data_grid << column_headers.count.times.inject([]) { |col| col << nil }
+        data_grid << column_headers.count.times.inject([]) { |col| col << nil }
       end
-      @data_grid
+      data_grid
     end
 
     def populate_grid
       prepare_grid
       row_headers.each_with_index do |row, row_index|
-        @data_grid[row_index] = build_data_row(row)
+        data_grid[row_index] = build_data_row(row)
       end
-      @data_grid
+      data_grid
     end
 
     private
 
     def headers(method)
-      hdrs = @source_data.collect { |c| c.send method }.uniq
+      hdrs = source_data.collect { |c| c.send method }.uniq
       configuration.sort ? hdrs.sort : hdrs
     end
 
@@ -96,7 +96,7 @@ module PivotTable
     end
 
     def find_data_item(row, col)
-      @source_data.find do |item|
+      source_data.find do |item|
         item.send(row_name) == row && item.send(column_name) == col
       end
     end
