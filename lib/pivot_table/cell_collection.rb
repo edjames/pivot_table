@@ -1,7 +1,7 @@
 module PivotTable
   module CellCollection
 
-    ACCESSORS = [:header, :data, :value_name, :orthogonal_headers]
+    ACCESSORS = %i[header data value_name orthogonal_headers]
 
     ACCESSORS.each do |a|
       self.send(:attr_accessor, a)
@@ -9,7 +9,8 @@ module PivotTable
 
     def initialize(options = {})
       ACCESSORS.each do |a|
-        self.send("#{a}=", options[a]) if options.has_key?(a)
+        next unless options.has_key?(a)
+        self.send("#{a}=", options[a])
       end
     end
 
@@ -19,10 +20,11 @@ module PivotTable
 
   private
 
-    def find_data by_header_name
-      data[
-        orthogonal_headers.find_index{|header| by_header_name.to_s == header.to_s}
-      ] rescue nil
+    def find_data(by_header_name)
+      index = orthogonal_headers.find_index{ |header| by_header_name.to_s == header.to_s }
+      data[index]
+    rescue TypeError
+      nil
     end
 
   end

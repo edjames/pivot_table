@@ -24,10 +24,10 @@ module PivotTable
       @rows = []
       data_grid.each_with_index do |data, index|
         rows << Row.new(
-          :header     => row_headers[index],
-          :data       => data,
-          :value_name => value_name,
-          :orthogonal_headers => column_headers
+          header: row_headers[index],
+          data: data,
+          value_name: value_name,
+          orthogonal_headers: column_headers
         )
       end
     end
@@ -36,10 +36,10 @@ module PivotTable
       @columns = []
       data_grid.transpose.each_with_index do |data, index|
         columns << Column.new(
-          :header           => column_headers[index],
-          :data             => data,
-          :value_name       => value_name,
-          :orthogonal_headers => row_headers
+          header: column_headers[index],
+          data: data,
+          value_name: value_name,
+          orthogonal_headers: row_headers
         )
       end
     end
