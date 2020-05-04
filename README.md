@@ -182,8 +182,7 @@ This option will automatically sort your data alphabetically based on your colum
 
 ### Ruby Support
 
-* 1.9.3
-* 2.x
+This gem should work with all [currently supported Ruby versions](https://www.ruby-lang.org/en).
 
 ### Contributing to PivotTable
 
@@ -199,4 +198,4 @@ If you want to contribute:
 
 ### Copyright
 
-Copyright (c) 2014 Ed James. See LICENSE for details.
+Copyright (c) 2020 Ed James. See LICENSE for details.
